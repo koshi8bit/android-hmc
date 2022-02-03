@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">hmc</string>
-    <string name="title">QR code scanner HMC</string>
+    <string name="title">QR code scanner HMC7</string>
     <string name="scan_text">Сканировать</string>
     <string name="copy">Копировать</string>
     <string name="codes_found">Найденные коды:</string>
