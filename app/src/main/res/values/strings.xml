@@ -5,4 +5,5 @@
     <string name="copy">Копировать</string>
     <string name="codes_found">Найденные коды:</string>
     <string name="start_scan">Начните сканирование..</string>
+    <string name="copyed">Текст скопирован</string>
 </resources>
