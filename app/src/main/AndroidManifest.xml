@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
+        android:keepScreenOn="true"
         android:theme="@style/Theme.Hmc">
         <activity android:name=".ContinuousCaptureActivity" />
         <activity

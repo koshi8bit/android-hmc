@@ -2,11 +2,14 @@ package com.koshi8bit.hmc;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
@@ -20,6 +23,7 @@ import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +45,10 @@ public class ContinuousCaptureActivity extends Activity {
             String res = result.getText();
             if(res == null || res.equals(lastText)) {
                 // Prevent duplicate scans
+                return;
+            }
+
+            if (!res.matches("^t=\\d+T\\d+&s=\\d+.\\d+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$")){
                 return;
             }
 
@@ -68,7 +76,8 @@ public class ContinuousCaptureActivity extends Activity {
         setContentView(R.layout.continuous_scan);
 
         barcodeView = findViewById(R.id.barcode_scanner);
-        Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
+        // Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
+        Collection<BarcodeFormat> formats = Collections.singletonList(BarcodeFormat.QR_CODE);
         barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeView.initializeFromIntent(getIntent());
         barcodeView.decodeContinuous(callback);
@@ -77,6 +86,8 @@ public class ContinuousCaptureActivity extends Activity {
         list = new ArrayList<>();
 
         beepManager = new BeepManager(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Log.d("", String.valueOf(beepManager.isVibrateEnabled()));
     }
 
     @Override
@@ -99,6 +110,8 @@ public class ContinuousCaptureActivity extends Activity {
 
     private void ready_all()
     {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         Set<String> set = new HashSet<>(list);
         list.clear();
         list.addAll(set);
@@ -121,15 +134,4 @@ public class ContinuousCaptureActivity extends Activity {
         }
         return res;
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        // check that it is the SecondActivity with an OK result
-//        if (requestCode == RESULT_OK) {
-//            String returnString = data.getStringExtra(Intent.EXTRA_TEXT);
-//        }
-//
-//    }
 }
