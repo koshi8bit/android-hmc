@@ -93,12 +93,20 @@ public class ContinuousCaptureActivity extends Activity {
         barcodeView.pause();
     }
 
-    public void pause(View view) {
-        barcodeView.pause();
+    public void ready(View view) {
+        ready_all();
     }
 
-    public void resume(View view) {
-        barcodeView.resume();
+    private void ready_all()
+    {
+        Set<String> set = new HashSet<>(list);
+        list.clear();
+        list.addAll(set);
+
+        Intent intent = new Intent();
+        intent.putExtra(Intent.EXTRA_TEXT, String.join("\n", list));
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void triggerScan(View view) {
@@ -109,14 +117,7 @@ public class ContinuousCaptureActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean res = barcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
         if (res) {
-            Set<String> set = new HashSet<>(list);
-            list.clear();
-            list.addAll(set);
-
-            Intent intent = new Intent();
-            intent.putExtra(Intent.EXTRA_TEXT, String.join("\n", list));
-            setResult(RESULT_OK, intent);
-            finish();
+            ready_all();
         }
         return res;
     }

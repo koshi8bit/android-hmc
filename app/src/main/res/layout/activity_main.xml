@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:onClick="onCopyClick"
             android:text="@string/copy" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

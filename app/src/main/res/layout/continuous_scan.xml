@@ -13,24 +13,20 @@
     </com.journeyapps.barcodescanner.DecoratedBarcodeView>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/buttonsLayout"
-        android:layout_toLeftOf="@+id/centerHorizont">
+        android:layout_toLeftOf="@+id/centerHorizont"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="pause"
-            android:text="Pause" />
+            android:layout_height="match_parent"
+            android:height="85sp"
+            android:onClick="ready"
+            android:text="@string/ready" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Resume"
-            android:onClick="resume" />
     </LinearLayout>
 
     <View
