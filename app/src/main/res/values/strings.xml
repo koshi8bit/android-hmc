@@ -8,6 +8,6 @@
     <string name="copyed">Текст скопирован</string>
     <string name="share">Поделиться</string>
     <string name="ready">Готово</string>
-    <string name="only_receipt_format">Только формат чеков</string>
+    <string name="only_receipt_format">Только чеки ФНС</string>
     <string name="open_tg">Открыть телегу</string>
 </resources>

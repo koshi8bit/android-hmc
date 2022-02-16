@@ -1,11 +1,14 @@
 package com.koshi8bit.hmc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,17 +31,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import android.media.MediaPlayer;
+import android.view.View;
+import android.os.Vibrator;
+
 /**
  * This sample performs continuous scanning, displaying the barcode and source image whenever
  * a barcode is scanned.
  */
 public class ContinuousCaptureActivity extends Activity {
     private DecoratedBarcodeView barcodeView;
-    private BeepManager beepManager;
     private String lastText;
     private ImageView imageView;
     private ArrayList<String> list;
     private boolean only_receipt_format = true;
+    MediaPlayer myMediaPlayer;
+    Vibrator v;
+
 
     private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -59,7 +68,10 @@ public class ContinuousCaptureActivity extends Activity {
             lastText = res;
             barcodeView.setStatusText(res);
 
-            beepManager.playBeepSoundAndVibrate();
+//            beepManager.playBeepSoundAndVibrate();
+//            myMediaPlayer.stop();
+            myMediaPlayer.start();
+            v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
             list.add(res);
 
             //Added preview of scanned barcode
@@ -76,6 +88,10 @@ public class ContinuousCaptureActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("AAAAAAAAA", "onCreate");
         super.onCreate(savedInstanceState);
+        myMediaPlayer = MediaPlayer.create(ContinuousCaptureActivity.this,
+                R.raw.mario_coin_sound);
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
 
         Intent indent = getIntent();
         only_receipt_format = indent.getBooleanExtra("only_receipt_format", true);
@@ -99,9 +115,7 @@ public class ContinuousCaptureActivity extends Activity {
         imageView = findViewById(R.id.barcodePreview);
         list = new ArrayList<>();
 
-        beepManager = new BeepManager(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Log.d("", String.valueOf(beepManager.isVibrateEnabled()));
     }
 
     @Override
