@@ -38,8 +38,9 @@ public class ContinuousCaptureActivity extends Activity {
     private String lastText;
     private ImageView imageView;
     private ArrayList<String> list;
+    private boolean only_receipt_format = true;
 
-    private BarcodeCallback callback = new BarcodeCallback() {
+    private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
             String res = result.getText();
@@ -48,8 +49,11 @@ public class ContinuousCaptureActivity extends Activity {
                 return;
             }
 
-            if (!res.matches("^t=\\d+T\\d+&s=\\d+.\\d+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$")){
-                return;
+            if (only_receipt_format)
+            {
+                if (!res.matches("^t=\\d+T\\d+&s=\\d+.\\d+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$")){
+                    return;
+                }
             }
 
             lastText = res;
@@ -73,11 +77,20 @@ public class ContinuousCaptureActivity extends Activity {
         Log.d("AAAAAAAAA", "onCreate");
         super.onCreate(savedInstanceState);
 
+        Intent indent = getIntent();
+        only_receipt_format = indent.getBooleanExtra("only_receipt_format", true);
+
         setContentView(R.layout.continuous_scan);
 
         barcodeView = findViewById(R.id.barcode_scanner);
-        // Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
-        Collection<BarcodeFormat> formats = Collections.singletonList(BarcodeFormat.QR_CODE);
+        Collection<BarcodeFormat> formats;
+        if (only_receipt_format)
+        {
+            formats = Collections.singletonList(BarcodeFormat.QR_CODE);
+        }
+        else {
+            formats= Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39, BarcodeFormat.DATA_MATRIX);
+        }
         barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeView.initializeFromIntent(getIntent());
         barcodeView.decodeContinuous(callback);

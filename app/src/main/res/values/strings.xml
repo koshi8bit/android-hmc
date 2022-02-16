@@ -8,4 +8,5 @@
     <string name="copyed">Текст скопирован</string>
     <string name="share">Поделиться</string>
     <string name="ready">Готово</string>
+    <string name="only_receipt_format">Только формат чеков</string>
 </resources>

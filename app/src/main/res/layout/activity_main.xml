@@ -26,6 +26,13 @@
             android:layout_weight="0.5"
             android:text="@string/start_scan" />
 
+        <CheckBox
+            android:id="@+id/only_receipt_format"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/only_receipt_format" />
+
         <Button
             android:id="@+id/btn_scan"
             android:layout_width="match_parent"

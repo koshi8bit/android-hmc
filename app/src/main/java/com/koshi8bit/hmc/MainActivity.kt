@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private var textView_qrs: TextView? = null
+    private var only_receipt_format: CheckBox? = null
     val QR_SCAN_INDENT = 10
 
 
@@ -24,11 +26,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         textView_qrs = findViewById(R.id.textView_qrs)
+        only_receipt_format = findViewById(R.id.only_receipt_format)
     }
 
     fun onButtonClick(view: View?) {
         // barcodeLauncher.launch(ScanOptions())
         val intent = Intent(this, ContinuousCaptureActivity::class.java)
+        intent.putExtra("only_receipt_format", only_receipt_format?.isChecked)
         startActivityForResult(intent, QR_SCAN_INDENT)
     }
 
