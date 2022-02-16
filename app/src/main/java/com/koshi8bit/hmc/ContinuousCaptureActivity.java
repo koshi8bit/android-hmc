@@ -88,8 +88,9 @@ public class ContinuousCaptureActivity extends Activity {
         {
             formats = Collections.singletonList(BarcodeFormat.QR_CODE);
         }
-        else {
-            formats= Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39, BarcodeFormat.DATA_MATRIX);
+        else
+        {
+            formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39, BarcodeFormat.DATA_MATRIX);
         }
         barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeView.initializeFromIntent(getIntent());
