@@ -26,6 +26,13 @@
             android:layout_weight="0.5"
             android:text="@string/start_scan" />
 
+        <Button
+            android:id="@+id/btn_scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="@string/scan_text" />
+
         <CheckBox
             android:id="@+id/only_receipt_format"
             android:layout_width="match_parent"
@@ -34,11 +41,11 @@
             android:text="@string/only_receipt_format" />
 
         <Button
-            android:id="@+id/btn_scan"
+            android:id="@+id/buttonSendTg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onButtonClick"
-            android:text="@string/scan_text" />
+            android:onClick="onButtonSendTgClick"
+            android:text="@string/open_tg" />
 
         <Button
             android:id="@+id/btn_copy"

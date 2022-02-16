@@ -1,12 +1,11 @@
 package com.koshi8bit.hmc
 
-import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -35,6 +34,17 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("only_receipt_format", only_receipt_format?.isChecked)
         startActivityForResult(intent, QR_SCAN_INDENT)
     }
+
+    fun onButtonSendTgClick(view: View?) {
+        try {
+            val telegram = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/hmc2_bot"))
+            telegram.setPackage("org.telegram.messenger")
+            startActivity(telegram)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Telegram app is not installed", Toast.LENGTH_LONG).show()
+        }
+    }
+
 
     private fun copyToClipboard(text: CharSequence){
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
