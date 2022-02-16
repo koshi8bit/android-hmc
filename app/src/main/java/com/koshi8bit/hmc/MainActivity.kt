@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, QR_SCAN_INDENT)
     }
 
-    fun copyToClipboard(text: CharSequence){
+    private fun copyToClipboard(text: CharSequence){
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("label",text)
         clipboard.setPrimaryClip(clip)
@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                 val returnString = data!!.getStringExtra(Intent.EXTRA_TEXT)
                 textView_qrs?.text = returnString
                 copyToClipboard(textView_qrs?.text ?: "")
-
             }
         }
     }
