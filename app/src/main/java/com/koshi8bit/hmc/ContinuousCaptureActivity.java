@@ -45,6 +45,7 @@ public class ContinuousCaptureActivity extends Activity {
     private ImageView imageView;
     private ArrayList<String> list;
     private boolean only_receipt_format = true;
+    private boolean with_sound = true;
     MediaPlayer myMediaPlayer;
     Vibrator v;
 
@@ -70,7 +71,9 @@ public class ContinuousCaptureActivity extends Activity {
 
 //            beepManager.playBeepSoundAndVibrate();
 //            myMediaPlayer.stop();
-            myMediaPlayer.start();
+            if (with_sound) {
+                myMediaPlayer.start();
+            }
             v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
             list.add(res);
 
@@ -95,6 +98,7 @@ public class ContinuousCaptureActivity extends Activity {
 
         Intent indent = getIntent();
         only_receipt_format = indent.getBooleanExtra("only_receipt_format", true);
+        with_sound = indent.getBooleanExtra("with_sound", true);
 
         setContentView(R.layout.continuous_scan);
 

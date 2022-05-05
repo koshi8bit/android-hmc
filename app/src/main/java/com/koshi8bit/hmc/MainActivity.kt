@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private var textView_qrs: TextView? = null
     private var only_receipt_format: CheckBox? = null
+    private var with_sound: CheckBox? = null
     val QR_SCAN_INDENT = 10
 
 
@@ -26,12 +27,14 @@ class MainActivity : AppCompatActivity() {
 
         textView_qrs = findViewById(R.id.textView_qrs)
         only_receipt_format = findViewById(R.id.only_receipt_format)
+        with_sound = findViewById(R.id.with_sound)
     }
 
     fun onButtonClick(view: View?) {
         // barcodeLauncher.launch(ScanOptions())
         val intent = Intent(this, ContinuousCaptureActivity::class.java)
         intent.putExtra("only_receipt_format", only_receipt_format?.isChecked)
+        intent.putExtra("with_sound", with_sound?.isChecked)
         startActivityForResult(intent, QR_SCAN_INDENT)
     }
 
