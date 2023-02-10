@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
@@ -29,6 +30,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import android.media.MediaPlayer;
@@ -160,6 +162,10 @@ public class ContinuousCaptureActivity extends Activity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //Toast.makeText(this, String.format(Locale.US, "keyCode is %d", keyCode), Toast.LENGTH_LONG).show();
+        if ((keyCode == 24) || (keyCode == 25)) {
+            return false;
+        }
         boolean res = barcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
         if (res) {
             ready_all();

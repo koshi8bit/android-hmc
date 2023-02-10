@@ -11,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.app.AlertDialog
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,9 +57,14 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.copyed), Toast.LENGTH_LONG).show()
     }
 
+    fun onClearClick(view: View?) {
+        Toast.makeText(this, getString(R.string.restart_app), Toast.LENGTH_LONG).show()
+    }
+
     fun onCopyClick(view: View?) {
         copyToClipboard(textView_qrs?.text ?: "")
     }
+
 
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -67,7 +73,8 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == QR_SCAN_INDENT) {
             if (resultCode == RESULT_OK) {
                 val returnString = data!!.getStringExtra(Intent.EXTRA_TEXT)
-                textView_qrs?.text = returnString
+                val res = textView_qrs?.text.toString() + "\n" + returnString
+                textView_qrs?.text = res
                 copyToClipboard(textView_qrs?.text ?: "")
             }
         }

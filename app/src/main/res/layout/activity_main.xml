@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:text="@string/start_scan" />
+            />
 
         <Button
             android:id="@+id/btn_scan"
@@ -60,6 +60,13 @@
             android:layout_height="wrap_content"
             android:onClick="onCopyClick"
             android:text="@string/copy" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClearClick"
+            android:text="@string/clear_text" />
 
     </LinearLayout>
 
