@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
@@ -32,6 +33,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.media.MediaPlayer;
 import android.view.View;
@@ -43,6 +46,7 @@ import android.os.Vibrator;
  */
 public class ContinuousCaptureActivity extends Activity {
     private DecoratedBarcodeView barcodeView;
+    private TextView price;
     private String lastText;
     private ImageView imageView;
     private ArrayList<String> list;
@@ -51,6 +55,8 @@ public class ContinuousCaptureActivity extends Activity {
     private boolean light = true;
     MediaPlayer myMediaPlayer;
     Vibrator v;
+    final String pattern = "^t=\\d+T\\d+&s=(\\d+.\\d+)&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$";
+    private final Pattern p = Pattern.compile(pattern);
 
 
     private final BarcodeCallback callback = new BarcodeCallback() {
@@ -64,7 +70,7 @@ public class ContinuousCaptureActivity extends Activity {
 
             if (only_receipt_format)
             {
-                if (!res.matches("^t=\\d+T\\d+&s=\\d+.\\d+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$")){
+                if (!res.matches(pattern)){
                     v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
                     barcodeView.setStatusText("Invalid QR code");
                     return;
@@ -73,6 +79,10 @@ public class ContinuousCaptureActivity extends Activity {
 
             lastText = res;
             barcodeView.setStatusText(res);
+            Matcher m = p.matcher(res);
+            if (m.find()) {
+                price.setText(m.group(1));
+            }
 
 //            beepManager.playBeepSoundAndVibrate();
 //            myMediaPlayer.stop();
@@ -110,6 +120,7 @@ public class ContinuousCaptureActivity extends Activity {
         setContentView(R.layout.continuous_scan);
 
         barcodeView = findViewById(R.id.barcode_scanner);
+        price = findViewById(R.id.textView_sum);
         Collection<BarcodeFormat> formats;
         if (only_receipt_format)
         {
