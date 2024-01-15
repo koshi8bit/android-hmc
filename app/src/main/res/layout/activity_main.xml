@@ -41,6 +41,12 @@
             android:text="@string/only_receipt_format" />
 
         <CheckBox
+            android:id="@+id/checkBox_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/light" />
+
+        <CheckBox
             android:id="@+id/with_sound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

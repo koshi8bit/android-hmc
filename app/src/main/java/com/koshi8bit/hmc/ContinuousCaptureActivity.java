@@ -48,6 +48,7 @@ public class ContinuousCaptureActivity extends Activity {
     private ArrayList<String> list;
     private boolean only_receipt_format = true;
     private boolean with_sound = true;
+    private boolean light = true;
     MediaPlayer myMediaPlayer;
     Vibrator v;
 
@@ -64,6 +65,8 @@ public class ContinuousCaptureActivity extends Activity {
             if (only_receipt_format)
             {
                 if (!res.matches("^t=\\d+T\\d+&s=\\d+.\\d+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$")){
+                    v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                    barcodeView.setStatusText("Invalid QR code");
                     return;
                 }
             }
@@ -101,6 +104,7 @@ public class ContinuousCaptureActivity extends Activity {
         Intent indent = getIntent();
         only_receipt_format = indent.getBooleanExtra("only_receipt_format", true);
         with_sound = indent.getBooleanExtra("with_sound", true);
+        light = indent.getBooleanExtra("light", true);
 
         setContentView(R.layout.continuous_scan);
 
