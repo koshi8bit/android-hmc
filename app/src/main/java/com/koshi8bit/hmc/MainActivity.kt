@@ -50,11 +50,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun copyToClipboard(text: CharSequence){
+    private fun copyToClipboard(text: CharSequence, showMessage: Boolean){
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("label",text)
         clipboard.setPrimaryClip(clip)
-        Toast.makeText(this, getString(R.string.copyed), Toast.LENGTH_LONG).show()
+        if (showMessage) {
+            Toast.makeText(this, getString(R.string.copyed), Toast.LENGTH_LONG).show()
+        }
     }
 
     fun onClearClick(view: View?) {
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onCopyClick(view: View?) {
-        copyToClipboard(textView_qrs?.text ?: "")
+        copyToClipboard(textView_qrs?.text ?: "", true)
     }
 
 
@@ -75,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 val returnString = data!!.getStringExtra(Intent.EXTRA_TEXT)
                 val res = textView_qrs?.text.toString() + "\n" + returnString
                 textView_qrs?.text = res
-                copyToClipboard(textView_qrs?.text ?: "")
+                copyToClipboard(textView_qrs?.text ?: "", false)
             }
         }
     }
