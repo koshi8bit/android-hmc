@@ -65,7 +65,7 @@ public class ContinuousCaptureActivity extends Activity {
             if (only_receipt_format)
             {
                 if (!res.matches("^t=\\d+T\\d+&s=\\d+.\\d+&fn=\\d+&i=\\d+&fp=\\d+&n=\\d$")){
-                    v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                    v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
                     barcodeView.setStatusText("Invalid QR code");
                     return;
                 }
@@ -106,6 +106,7 @@ public class ContinuousCaptureActivity extends Activity {
         with_sound = indent.getBooleanExtra("with_sound", true);
         light = indent.getBooleanExtra("light", true);
 
+
         setContentView(R.layout.continuous_scan);
 
         barcodeView = findViewById(R.id.barcode_scanner);
@@ -123,6 +124,11 @@ public class ContinuousCaptureActivity extends Activity {
         barcodeView.decodeContinuous(callback);
 
         imageView = findViewById(R.id.barcodePreview);
+        if (light) {
+            barcodeView.setTorchOn();
+        } else {
+            barcodeView.setTorchOff();
+        }
         list = new ArrayList<>();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
